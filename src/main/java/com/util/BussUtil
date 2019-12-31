@@ -1,0 +1,26 @@
+package com.lw.util;
+import com.lw.sqlUtil.service.SqlUtilService;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+import  javax.servlet.http.HttpServletRequest;
+
+
+public class BussUtil
+{
+
+
+    public static String getAllFjwjStr(String fuid,String fjlx) {
+        List list= SqlOper.list("select fjwj from cmsfj where fuid='"+fuid+"' and fjlx like '%"+fjlx+"%'");
+        String s="";
+        for(int i=0;i<list.size();i++){
+            String fjwj=InputUtil.get_list_val(list,i,"fjwj");
+            String fjsm=InputUtil.get_list_val(list,i,"fjsm");
+            if(fjlx.equals("附件")){
+                s+=fjsm+"|"+ fjwj+";";
+            }else{
+                s+=fjwj+";";
+            }
+        }
+        return s;
+    }
